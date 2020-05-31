@@ -1,13 +1,54 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+
+def packageName = 'com.apurv.olaplay'
+def libraryVersion = '1.0.0'
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId packageName
+            version = libraryVersion
+            artifactId project.getName()
+
+            // Tell maven to prepare the generated "*.aar" file for publishing
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://localhost:8082/artifactory'
+    publish {
+        repository {
+            // The Artifactory repository key to publish to
+            repoKey = 'libs-release-local'
+
+            username = "admin"
+            password = "password"
+        }
+        defaults {
+            // Tell the Artifactory Plugin which artifacts should be published to Artifactory.
+            publications('aar')
+            publishArtifacts = true
+
+            // Properties to be attached to the published artifacts.
+            properties = ['qa.level': 'basic', 'dev.team': 'core']
+            // Publish generated POM files to Artifactory (true by default)
+            publishPom = true
+        }
+    }
+}
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 29
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
-        applicationId "com.apurv.olaplay"
+
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -20,14 +61,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.volley:volley:1.0.0'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:design:25.3.1'
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.android.support:recyclerview-v7:25.3.1'
+    implementation 'com.android.support:cardview-v7:25.3.1'
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.7', changing: true
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.7', changing: true
 }

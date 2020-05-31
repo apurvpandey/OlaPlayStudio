@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OlaPlayStudio.iml" filepath="$PROJECT_DIR$/OlaPlayStudio.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OlaPlayStudio.iml" filepath="$PROJECT_DIR$/OlaPlayStudio.iml" group="OlaPlayStudio" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="OlaPlayStudio/app" />
     </modules>
   </component>
 </project>
